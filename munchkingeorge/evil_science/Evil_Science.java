@@ -8,7 +8,6 @@ import munchkingeorge.evil_science.items.notebook.NoteBook;
 import munchkingeorge.evil_science.proxy.CommonProxy;
 import munchkingeorge.evil_science.renderer.RenderRobot;
 import munchkingeorge.evil_science.robot.EntityRobot;
-import munchkingeorge.evil_science.robot.EntityRobotBlock;
 import munchkingeorge.evil_science.tileentity.StandEntity;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -20,7 +19,6 @@ import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.entity.projectile.EntityEgg;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.src.ModLoader;
 import net.minecraft.world.biome.BiomeGenBase;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.common.Mod;
@@ -70,7 +68,6 @@ public class Evil_Science
 	{
         proxy.registerRenderers();
         GameRegistry.registerTileEntity(StandEntity.class, "ResearchTable");
-        GameRegistry.registerTileEntity(EntityRobotBlock.class, "RobotBlock");
         
         NetworkRegistry.instance().registerGuiHandler(this, new GuiHandler());
 		
