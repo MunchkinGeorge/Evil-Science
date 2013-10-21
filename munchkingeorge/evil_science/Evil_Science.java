@@ -57,6 +57,7 @@ public class Evil_Science
 	public static Item DamageUpgrader;
 	public static Item HealthUpgrader;
 	public static Item SpeedUpgrader;
+	public static Item Reader;
 	
 	public static Block Stand;
 	
@@ -68,6 +69,8 @@ public class Evil_Science
                 return new ItemStack(NoteBook, 1, 0);
         }
 	};
+
+	
 
 	@EventHandler
 	public void load(FMLInitializationEvent event)
@@ -97,6 +100,8 @@ public class Evil_Science
 		ItemId++;
 		SpeedUpgrader = new Items(ItemId).setUnlocalizedName("SpeedUpgrader").setMaxStackSize(16);
 		ItemId++;
+		Reader = new Items(ItemId).setUnlocalizedName("Reader");
+		ItemId++;
 		
 		//blocks
 		Stand = new Stand(507).setUnlocalizedName("ResearchTable");		
@@ -120,6 +125,7 @@ public class Evil_Science
 		LanguageRegistry.addName(DamageUpgrader, "Damage Upgrader");
 		LanguageRegistry.addName(HealthUpgrader, "Health Upgrader");
 		LanguageRegistry.addName(SpeedUpgrader, "Speed Upgrader");
+		LanguageRegistry.addName(Reader, "Reader");
 		LanguageRegistry.addName(Stand, "Research Table");
 		LanguageRegistry.instance().addStringLocalization("itemGroup.evilscience", "en_US", "Evil Science");
 		LanguageRegistry.instance().addStringLocalization("entity.evilscience.robot.name", "en_US", "Melee-Robot");

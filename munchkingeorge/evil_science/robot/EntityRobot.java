@@ -73,6 +73,7 @@ public class EntityRobot extends EntityTameable
     private float timeWolfIsShaking;
     private float prevTimeWolfIsShaking;
 	private float attackDamage;
+	private EntityPlayer Player;
 
     public EntityRobot(World par1World)
     {
@@ -352,75 +353,91 @@ public class EntityRobot extends EntityTameable
     public boolean interact(EntityPlayer par1EntityPlayer)
     {
         ItemStack itemstack = par1EntityPlayer.inventory.getCurrentItem();
-        if (!this.isTamed())
-        {
-        	Tame(par1EntityPlayer);
-            return true;
-        }
         
-        if (itemstack != null && itemstack.itemID == Evil_Science.DamageUpgrader.itemID)
+        if (itemstack != null)
         {
-        	if(attackDamage != 10)
-        	{
-        		if (!par1EntityPlayer.capabilities.isCreativeMode)
-                {
-                    --itemstack.stackSize;
-                }
+        	if (itemstack != null && itemstack.itemID == Evil_Science.DamageUpgrader.itemID)
+            {
+            	if(attackDamage != 8)
+            	{
+            		if (!par1EntityPlayer.capabilities.isCreativeMode)
+                    {
+                        --itemstack.stackSize;
+                    }
 
-                if (itemstack.stackSize <= 0)
-                {
-                    par1EntityPlayer.inventory.setInventorySlotContents(par1EntityPlayer.inventory.currentItem, (ItemStack)null);
-                }
-                if (!this.worldObj.isRemote)
-                {
-                	attackDamage++;
-                }
-        	}
-        	return true;
-        }
-        
-        if (itemstack != null && itemstack.itemID == Evil_Science.HealthUpgrader.itemID)
-        {
-        	if(!(this.getEntityAttribute(SharedMonsterAttributes.maxHealth).getAttributeValue() == 30))
-        	{
-        		if (!par1EntityPlayer.capabilities.isCreativeMode)
-                {
-                    --itemstack.stackSize;
-                }
+                    if (itemstack.stackSize <= 0)
+                    {
+                        par1EntityPlayer.inventory.setInventorySlotContents(par1EntityPlayer.inventory.currentItem, (ItemStack)null);
+                    }
+                    if (!this.worldObj.isRemote)
+                    {
+                    	attackDamage++;
+                    }
+            	}
+            	return true;
+            }
+            
+            if (itemstack != null && itemstack.itemID == Evil_Science.HealthUpgrader.itemID)
+            {
+            	if(!(this.getEntityAttribute(SharedMonsterAttributes.maxHealth).getAttributeValue() == 30))
+            	{
+            		if (!par1EntityPlayer.capabilities.isCreativeMode)
+                    {
+                        --itemstack.stackSize;
+                    }
 
-                if (itemstack.stackSize <= 0)
-                {
-                    par1EntityPlayer.inventory.setInventorySlotContents(par1EntityPlayer.inventory.currentItem, (ItemStack)null);
-                }
-                if (!this.worldObj.isRemote)
-                {
-        		this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setAttribute(this.getEntityAttribute(SharedMonsterAttributes.maxHealth).getAttributeValue() + 1.0D);
-        		this.setHealth(30F);
-                }
-        	}
-        	return true;
-        }
+                    if (itemstack.stackSize <= 0)
+                    {
+                        par1EntityPlayer.inventory.setInventorySlotContents(par1EntityPlayer.inventory.currentItem, (ItemStack)null);
+                    }
+                    if (!this.worldObj.isRemote)
+                    {
+            		this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setAttribute(this.getEntityAttribute(SharedMonsterAttributes.maxHealth).getAttributeValue() + 1.0D);
+            		this.setHealth(30F);
+                    }
+            	}
+            	return true;
+            }
 
-        if (itemstack != null && itemstack.itemID == Evil_Science.SpeedUpgrader.itemID)
-        {
-        	if(!(this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).getAttributeValue() == 0.6))
-        	{
-        		if (!par1EntityPlayer.capabilities.isCreativeMode)
-                {
-                    --itemstack.stackSize;
-                }
+            if (itemstack != null && itemstack.itemID == Evil_Science.SpeedUpgrader.itemID)
+            {
+            	if(!(this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).getAttributeValue() == 0.6))
+            	{
+            		if (!par1EntityPlayer.capabilities.isCreativeMode)
+                    {
+                        --itemstack.stackSize;
+                    }
 
-                if (itemstack.stackSize <= 0)
-                {
-                    par1EntityPlayer.inventory.setInventorySlotContents(par1EntityPlayer.inventory.currentItem, (ItemStack)null);
-                }
-                if (!this.worldObj.isRemote)
-                {
-        		this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setAttribute(this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).getAttributeValue() + 0.1D);
-        	
-                }
+                    if (itemstack.stackSize <= 0)
+                    {
+                        par1EntityPlayer.inventory.setInventorySlotContents(par1EntityPlayer.inventory.currentItem, (ItemStack)null);
+                    }
+                    if (!this.worldObj.isRemote)
+                    {
+            		this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setAttribute(this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).getAttributeValue() + 0.1D);
+            	
+                    }
 
-        	}
+            	}
+            }
+            if (itemstack != null && itemstack.itemID == Evil_Science.Reader.itemID)
+            {
+            	if (!par1EntityPlayer.capabilities.isCreativeMode)
+            	{
+            		itemstack.setItemDamage(itemstack.getItemDamage() - 1);
+            	}
+            	if (!this.worldObj.isRemote)
+            	{
+            	Player = par1EntityPlayer;
+            	Player.addChatMessage("Stats;");
+            	Player.addChatMessage("Owner =" + this.getOwnerName());
+            	Player.addChatMessage("MaxHealth =" + this.getEntityAttribute(SharedMonsterAttributes.maxHealth).getAttributeValue());
+            	Player.addChatMessage("Health" + this.getHealth());
+            	Player.addChatMessage("Speed =" + this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).getAttributeValue());
+            	Player.addChatMessage("Damage =" + this.attackDamage);
+            	return true;
+            	}
+            }
         }
         
         return super.interact(par1EntityPlayer);
