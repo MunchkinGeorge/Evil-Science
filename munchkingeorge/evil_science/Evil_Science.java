@@ -42,6 +42,8 @@ public class Evil_Science
 	public static final String modid = "evilscience";
 
 	public static final String modname = "Evil Science Mod";
+
+	public static final int RobotEntityId = 0;
 	
 	@Instance(Evil_Science.modname)
 	public static Evil_Science instance;
@@ -52,10 +54,14 @@ public class Evil_Science
 	public static Item Battery_Empty;
 	public static Item FighterRobotSpawner;
 	public static Item RobotCore;
+	public static Item DamageUpgrader;
+	public static Item HealthUpgrader;
+	public static Item SpeedUpgrader;
 	
 	public static Block Stand;
 	
-	static int startEntityId = 300;
+	static int startEntityId = 400;
+	static int entityId = startEntityId;
 	
 	public static CreativeTabs frankenstein = new CreativeTabs(modid) {
         public ItemStack getIconItemStack() {
@@ -85,6 +91,12 @@ public class Evil_Science
 		ItemId++;
 		RobotCore = new Items(ItemId).setUnlocalizedName("RobotCore");
 		ItemId++;
+		DamageUpgrader = new Items(ItemId).setUnlocalizedName("DamageUpgrader").setMaxStackSize(16);
+		ItemId++;
+		HealthUpgrader = new Items(ItemId).setUnlocalizedName("HealthUpgrader").setMaxStackSize(16);
+		ItemId++;
+		SpeedUpgrader = new Items(ItemId).setUnlocalizedName("SpeedUpgrader").setMaxStackSize(16);
+		ItemId++;
 		
 		//blocks
 		Stand = new Stand(507).setUnlocalizedName("ResearchTable");		
@@ -93,7 +105,10 @@ public class Evil_Science
 		GameRegistry.registerBlock(Stand, Stand.getUnlocalizedName().substring(5));
 		
 		//Robot
-		EntityRegistry.registerModEntity(EntityRobot.class, "robot", 1, this, 80, 3, true);
+		int RobotEntityId = entityId;
+		EntityRegistry.registerModEntity(EntityRobot.class, "robot", entityId, this, 80, 3, true);
+		entityId++;
+		
 		 
 		//LanguageRegistry
 		LanguageRegistry.addName(Tube, "Tube");
@@ -102,6 +117,9 @@ public class Evil_Science
 		LanguageRegistry.addName(Battery_Empty, "Empty Battery");
 		LanguageRegistry.addName(FighterRobotSpawner, "Melee-Robot");;
 		LanguageRegistry.addName(RobotCore, "Robot Core");
+		LanguageRegistry.addName(DamageUpgrader, "Damage Upgrader");
+		LanguageRegistry.addName(HealthUpgrader, "Health Upgrader");
+		LanguageRegistry.addName(SpeedUpgrader, "Speed Upgrader");
 		LanguageRegistry.addName(Stand, "Research Table");
 		LanguageRegistry.instance().addStringLocalization("itemGroup.evilscience", "en_US", "Evil Science");
 		LanguageRegistry.instance().addStringLocalization("entity.evilscience.robot.name", "en_US", "Melee-Robot");
@@ -119,12 +137,12 @@ public class Evil_Science
 		            "XXX",
 		            "XZX",
 		            "XXX",
-		            'X', new ItemStack(Block.blockIron), 'Z', Evil_Science.RobotCore
+		            'X', new ItemStack(Item.ingotIron), 'Z', Evil_Science.RobotCore
 				});
 				GameRegistry.addRecipe(new ItemStack(Evil_Science.RobotCore), new Object[]{
-		            "DDD",
+		            " D ",
 		            "DZD",
-		            "DDD",
+		            " D ",
 		            'Z', Evil_Science.Battery, 'D', new ItemStack(Item.redstone)
 				});
 		}

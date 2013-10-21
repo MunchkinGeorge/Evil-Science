@@ -1,5 +1,6 @@
 package munchkingeorge.evil_science.items;
 
+import munchkingeorge.evil_science.Evil_Science;
 import munchkingeorge.evil_science.robot.EntityRobot;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -31,7 +32,6 @@ public class FighterRobotSpawner extends Items{
 		this.setMaxStackSize(1);
 	}
 	
-		
 	public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
     {
         if (!par3EntityPlayer.capabilities.isCreativeMode)
@@ -44,9 +44,9 @@ public class FighterRobotSpawner extends Items{
         if (!par2World.isRemote)
         {
         	OwnerPlayer = par3EntityPlayer;
-        	EntityRobot entitychicken = new EntityRobot(par2World);
-            entitychicken.setLocationAndAngles(par3EntityPlayer.posX, par3EntityPlayer.posY, par3EntityPlayer.posZ, par3EntityPlayer.rotationYaw, 0.0F);
-            par2World.spawnEntityInWorld(entitychicken);
+        	EntityRobot entityrobot = new EntityRobot(par2World);
+            entityrobot.setLocationAndAngles(par3EntityPlayer.posX, par3EntityPlayer.posY, par3EntityPlayer.posZ, par3EntityPlayer.rotationYaw, 0.0F);
+            par2World.spawnEntityInWorld(entityrobot);
         }
 
         return par1ItemStack;

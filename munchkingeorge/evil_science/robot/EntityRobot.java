@@ -72,6 +72,7 @@ public class EntityRobot extends EntityTameable
      */
     private float timeWolfIsShaking;
     private float prevTimeWolfIsShaking;
+	private float attackDamage;
 
     public EntityRobot(World par1World)
     {
@@ -92,19 +93,14 @@ public class EntityRobot extends EntityTameable
         this.targetTasks.addTask(3, new EntityAIHurtByTarget(this, true));
         this.setTamed(false);
         this.aiSit.setSitting(true);
-        
+        attackDamage = 1;
     }
     
     protected void applyEntityAttributes()
     {
         super.applyEntityAttributes();
-        this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setAttribute(20.0D);
-        if (this.isTamed()){
-        	this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setAttribute(1D);
-        }
-        else {
-        	this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setAttribute(0.001D);
-        }
+        this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setAttribute(5.0D);
+        this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setAttribute(0.1D);
     }
 
     /**
@@ -189,7 +185,7 @@ public class EntityRobot extends EntityTameable
         
         if (!this.isTamed())
         {
-            this.interact(FighterRobotSpawner.OwnerPlayer);
+            this.Tame(FighterRobotSpawner.OwnerPlayer);
         }
 
         if (!this.worldObj.isRemote && this.isShaking && !this.field_70928_h && !this.hasPath() && this.onGround)
@@ -342,23 +338,12 @@ public class EntityRobot extends EntityTameable
     public boolean attackEntityAsMob(Entity par1Entity)
     {
         int i = this.isTamed() ? 4 : 2;
-        return par1Entity.attackEntityFrom(DamageSource.causeMobDamage(this), (float)i);
+        return par1Entity.attackEntityFrom(DamageSource.causeMobDamage(this), attackDamage);
     }
 
     public void setTamed(boolean par1)
     {
         super.setTamed(par1);
-
-        if (par1)
-        {
-        	this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setAttribute(0.3D);
-            this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setAttribute(20.0D);
-        }
-        else
-        {
-        	this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setAttribute(0.001D);
-            this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setAttribute(8.0D);
-        }
     }
 
     /**
@@ -366,11 +351,78 @@ public class EntityRobot extends EntityTameable
      */
     public boolean interact(EntityPlayer par1EntityPlayer)
     {
+        ItemStack itemstack = par1EntityPlayer.inventory.getCurrentItem();
         if (!this.isTamed())
         {
         	Tame(par1EntityPlayer);
             return true;
         }
+        
+        if (itemstack != null && itemstack.itemID == Evil_Science.DamageUpgrader.itemID)
+        {
+        	if(attackDamage != 10)
+        	{
+        		if (!par1EntityPlayer.capabilities.isCreativeMode)
+                {
+                    --itemstack.stackSize;
+                }
+
+                if (itemstack.stackSize <= 0)
+                {
+                    par1EntityPlayer.inventory.setInventorySlotContents(par1EntityPlayer.inventory.currentItem, (ItemStack)null);
+                }
+                if (!this.worldObj.isRemote)
+                {
+                	attackDamage++;
+                }
+        	}
+        	return true;
+        }
+        
+        if (itemstack != null && itemstack.itemID == Evil_Science.HealthUpgrader.itemID)
+        {
+        	if(!(this.getEntityAttribute(SharedMonsterAttributes.maxHealth).getAttributeValue() == 30))
+        	{
+        		if (!par1EntityPlayer.capabilities.isCreativeMode)
+                {
+                    --itemstack.stackSize;
+                }
+
+                if (itemstack.stackSize <= 0)
+                {
+                    par1EntityPlayer.inventory.setInventorySlotContents(par1EntityPlayer.inventory.currentItem, (ItemStack)null);
+                }
+                if (!this.worldObj.isRemote)
+                {
+        		this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setAttribute(this.getEntityAttribute(SharedMonsterAttributes.maxHealth).getAttributeValue() + 1.0D);
+        		this.setHealth(30F);
+                }
+        	}
+        	return true;
+        }
+
+        if (itemstack != null && itemstack.itemID == Evil_Science.SpeedUpgrader.itemID)
+        {
+        	if(!(this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).getAttributeValue() == 0.6))
+        	{
+        		if (!par1EntityPlayer.capabilities.isCreativeMode)
+                {
+                    --itemstack.stackSize;
+                }
+
+                if (itemstack.stackSize <= 0)
+                {
+                    par1EntityPlayer.inventory.setInventorySlotContents(par1EntityPlayer.inventory.currentItem, (ItemStack)null);
+                }
+                if (!this.worldObj.isRemote)
+                {
+        		this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setAttribute(this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).getAttributeValue() + 0.1D);
+        	
+                }
+
+        	}
+        }
+        
         return super.interact(par1EntityPlayer);
     }
     
@@ -382,7 +434,6 @@ public class EntityRobot extends EntityTameable
         	this.setPathToEntity((PathEntity)null);
         	this.setAttackTarget((EntityLivingBase)null);
         	this.aiSit.setSitting(false);
-        	this.setHealth(20.0F);
         	this.setOwner(par1EntityPlayer.getCommandSenderName());
         	this.playTameEffect(true);
         	this.worldObj.setEntityState(this, (byte)7);
