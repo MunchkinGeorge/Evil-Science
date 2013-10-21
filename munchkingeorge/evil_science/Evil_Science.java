@@ -80,9 +80,9 @@ public class Evil_Science
 		ItemId++;
 		NoteBook = new NoteBook(ItemId).setUnlocalizedName("NoteBook");
 		ItemId++;
-		Battery = new Battery_Full(ItemId).setUnlocalizedName("Battery");
+		Battery = new Items(ItemId).setUnlocalizedName("Battery").setMaxStackSize(1);
 		ItemId++;
-		Battery_Empty = new Battery_Empty(ItemId).setUnlocalizedName("Battery_Empty");
+		Battery_Empty = new Items(ItemId).setUnlocalizedName("Battery_Empty");
 		ItemId++;
 		FighterRobotSpawner = new FighterRobotSpawner(ItemId).setUnlocalizedName("Melee-Robot-Spawner");
 		ItemId++;
