@@ -1,0 +1,20 @@
+[
+{
+  "modid": "evilscience",
+  "name": "Evil Science Mod",
+  "description": "Add science to minecraft.",
+  "version": "0.1",
+  "url": "",
+  "updateUrl": "",
+  "authorList": [
+    "boing165"
+  ],
+  "credits": "By boing165",
+  "logoFile": "/assets/evil_science/logo/logo.png",
+  "screenshots": [
+  ],
+  "parent":"",
+  "dependencies": [
+  ]
+}
+]
