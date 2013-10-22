@@ -57,7 +57,7 @@ import net.minecraft.world.World;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class EntityRobot extends EntityTameable
+public class EntityFighterRobot extends EntityTameable
 {
     private float field_70926_e;
     private float field_70924_f;
@@ -74,8 +74,12 @@ public class EntityRobot extends EntityTameable
     private float prevTimeWolfIsShaking;
 	private float attackDamage;
 	private EntityPlayer Player;
+	private int DamageUpgrades;
+	private int SpeedUpgrades;
+	private int HealthUpgrades;
+	private int FlameUpgrades;
 
-    public EntityRobot(World par1World)
+    public EntityFighterRobot(World par1World)
     {
         super(par1World);
         this.setSize(0.6F, 0.8F);
@@ -174,6 +178,10 @@ public class EntityRobot extends EntityTameable
     protected void dropFewItems(boolean par1, int par2)
     {
     	this.dropItem(Evil_Science.FighterRobotSpawner.itemID, 1);
+    	this.dropItem(Evil_Science.DamageUpgrader.itemID, DamageUpgrades);
+    	this.dropItem(Evil_Science.SpeedUpgrader.itemID, SpeedUpgrades);
+    	this.dropItem(Evil_Science.HealthUpgrader.itemID, HealthUpgrades);
+    	this.dropItem(Evil_Science.FlameArrowUpgrader.itemID, FlameUpgrades);
     }
 
     /**
@@ -372,6 +380,7 @@ public class EntityRobot extends EntityTameable
                     if (!this.worldObj.isRemote)
                     {
                     	attackDamage++;
+                    	DamageUpgrades++;
                     }
             	}
             	return true;
@@ -394,6 +403,7 @@ public class EntityRobot extends EntityTameable
                     {
             		this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setAttribute(this.getEntityAttribute(SharedMonsterAttributes.maxHealth).getAttributeValue() + 1.0D);
             		this.setHealth(30F);
+            		HealthUpgrades++;
                     }
             	}
             	return true;
@@ -415,7 +425,7 @@ public class EntityRobot extends EntityTameable
                     if (!this.worldObj.isRemote)
                     {
             		this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setAttribute(this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).getAttributeValue() + 0.1D);
-            	
+            		SpeedUpgrades++;
                     }
 
             	}

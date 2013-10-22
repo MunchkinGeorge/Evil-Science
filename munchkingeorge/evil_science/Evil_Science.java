@@ -7,7 +7,8 @@ import munchkingeorge.evil_science.items.*;
 import munchkingeorge.evil_science.items.notebook.NoteBook;
 import munchkingeorge.evil_science.proxy.CommonProxy;
 import munchkingeorge.evil_science.renderer.RenderRobot;
-import munchkingeorge.evil_science.robot.EntityRobot;
+import munchkingeorge.evil_science.robot.EntityFighterRobot;
+import munchkingeorge.evil_science.robot.EntityRangedFighterRobot;
 import munchkingeorge.evil_science.tileentity.StandEntity;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -53,10 +54,12 @@ public class Evil_Science
 	public static Item Battery;
 	public static Item Battery_Empty;
 	public static Item FighterRobotSpawner;
+	public static Item RangedFighterRobotSpawner;
 	public static Item RobotCore;
 	public static Item DamageUpgrader;
 	public static Item HealthUpgrader;
 	public static Item SpeedUpgrader;
+	public static Item FlameArrowUpgrader;
 	public static Item Reader;
 	
 	public static Block Stand;
@@ -90,7 +93,9 @@ public class Evil_Science
 		ItemId++;
 		Battery_Empty = new Items(ItemId).setUnlocalizedName("Battery_Empty");
 		ItemId++;
-		FighterRobotSpawner = new FighterRobotSpawner(ItemId).setUnlocalizedName("Melee-Robot-Spawner");
+		FighterRobotSpawner = new FighterRobotSpawner(ItemId).setUnlocalizedName("FighterRobotSpawner");
+		ItemId++;
+		RangedFighterRobotSpawner = new RangedFighterRobotSpawner(ItemId).setUnlocalizedName("RangedFighterRobotSpawner");
 		ItemId++;
 		RobotCore = new Items(ItemId).setUnlocalizedName("RobotCore");
 		ItemId++;
@@ -99,6 +104,8 @@ public class Evil_Science
 		HealthUpgrader = new Items(ItemId).setUnlocalizedName("HealthUpgrader").setMaxStackSize(16);
 		ItemId++;
 		SpeedUpgrader = new Items(ItemId).setUnlocalizedName("SpeedUpgrader").setMaxStackSize(16);
+		ItemId++;
+		FlameArrowUpgrader = new Items(ItemId).setUnlocalizedName("FlameArrowUpgrader");
 		ItemId++;
 		Reader = new Items(ItemId).setUnlocalizedName("Reader");
 		ItemId++;
@@ -111,7 +118,9 @@ public class Evil_Science
 		
 		//Robot
 		int RobotEntityId = entityId;
-		EntityRegistry.registerModEntity(EntityRobot.class, "robot", entityId, this, 80, 3, true);
+		EntityRegistry.registerModEntity(EntityRangedFighterRobot.class, "rangedfighterrobot", entityId, this, 80, 3, true);
+		entityId++;
+		EntityRegistry.registerModEntity(EntityFighterRobot.class, "fighterrobot", entityId, this, 80, 3, true);
 		entityId++;
 		
 		 
@@ -121,14 +130,18 @@ public class Evil_Science
 		LanguageRegistry.addName(Battery, "Battery");
 		LanguageRegistry.addName(Battery_Empty, "Empty Battery");
 		LanguageRegistry.addName(FighterRobotSpawner, "Melee-Robot");;
+		LanguageRegistry.addName(RangedFighterRobotSpawner, "Sniper-Robot");
 		LanguageRegistry.addName(RobotCore, "Robot Core");
 		LanguageRegistry.addName(DamageUpgrader, "Damage Upgrader");
 		LanguageRegistry.addName(HealthUpgrader, "Health Upgrader");
 		LanguageRegistry.addName(SpeedUpgrader, "Speed Upgrader");
+		LanguageRegistry.addName(FlameArrowUpgrader, "Flame Arrow Upgrader");
 		LanguageRegistry.addName(Reader, "Reader");
 		LanguageRegistry.addName(Stand, "Research Table");
 		LanguageRegistry.instance().addStringLocalization("itemGroup.evilscience", "en_US", "Evil Science");
-		LanguageRegistry.instance().addStringLocalization("entity.evilscience.robot.name", "en_US", "Melee-Robot");
+		LanguageRegistry.instance().addStringLocalization("entity.evilscience.fighterrobot.name", "en_US", "Melee-Robot");
+		LanguageRegistry.instance().addStringLocalization("entity.evilscience.rangedfighterrobot.name", "en_US", "Sniper-Robot");
+		
 		
 		//Crafting Recipes
 				GameRegistry.addShapelessRecipe(new ItemStack(Evil_Science.NoteBook), new ItemStack(Item.book), new ItemStack(Block.pumpkin));
