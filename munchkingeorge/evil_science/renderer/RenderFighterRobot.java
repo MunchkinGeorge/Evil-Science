@@ -11,11 +11,11 @@ import cpw.mods.fml.relauncher.SideOnly;
 import java.io.*;
 
 @SideOnly(Side.CLIENT)
-public class RenderRobot extends RenderLiving
+public class RenderFighterRobot extends RenderLiving
 {
-    private static final ResourceLocation Your_Texture = new ResourceLocation("evil_science", "textures/models/robot.png");  //refers to:assets/yourmod/models/optionalfile/yourtexture.png
+    private static final ResourceLocation Your_Texture = new ResourceLocation("evil_science", "textures/models/fighterrobot.png");  //refers to:assets/yourmod/models/optionalfile/yourtexture.png
 
-    public RenderRobot(ModelBase par1ModelBase, float par2)
+    public RenderFighterRobot(ModelBase par1ModelBase, float par2)
     {
         super(par1ModelBase, par2);
     }

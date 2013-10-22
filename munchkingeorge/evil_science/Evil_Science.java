@@ -6,7 +6,7 @@ import munchkingeorge.evil_science.gui.GuiHandler;
 import munchkingeorge.evil_science.items.*;
 import munchkingeorge.evil_science.items.notebook.NoteBook;
 import munchkingeorge.evil_science.proxy.CommonProxy;
-import munchkingeorge.evil_science.renderer.RenderRobot;
+import munchkingeorge.evil_science.renderer.RenderFighterRobot;
 import munchkingeorge.evil_science.robot.EntityFighterRobot;
 import munchkingeorge.evil_science.robot.EntityRangedFighterRobot;
 import munchkingeorge.evil_science.tileentity.StandEntity;
